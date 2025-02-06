@@ -35,7 +35,7 @@ html {
 }
 
 #exchangers-container div.card-body > div {
-    min-width: var(--bs-breakpoint-md);
+    min-width: var(--bs-breakpoint-sm);
 }
 
 #chart-modal div.modal-body > div {
@@ -43,7 +43,5 @@ html {
 }
 
 #exchangers-body div[data-rate-id]:hover {
-    color: #fff !important;
-    background-color: rgba(var(--bs-success-rgb), var(--bs-bg-opacity, 1)) !important;
     cursor: pointer;
 }
