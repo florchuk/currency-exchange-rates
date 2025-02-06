@@ -4,10 +4,10 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
-public class ExchangerDomain {
+public class ExchangerDomain<T> {
     private Integer id;
 
-    private List<RateDomain> rateDomains;
+    private List<T> rateDomains;
 
     private String name;
 
@@ -19,7 +19,7 @@ public class ExchangerDomain {
 
     public ExchangerDomain(
             Integer id,
-            List<RateDomain> rateDomains,
+            List<T> rateDomains,
             String name,
             String nameUk,
             LocalDateTime createdAt,
@@ -37,7 +37,7 @@ public class ExchangerDomain {
         return this.id;
     }
 
-    public List<RateDomain> getRateDomains() {
+    public List<T> getRateDomains() {
         return this.rateDomains;
     }
 
@@ -61,7 +61,7 @@ public class ExchangerDomain {
         this.id = id;
     }
 
-    public void setRateDomains(List<RateDomain> rateDomains) {
+    public void setRateDomains(List<T> rateDomains) {
         this.rateDomains = rateDomains;
     }
 
@@ -91,7 +91,7 @@ public class ExchangerDomain {
             return false;
         }
 
-        ExchangerDomain exchangerDomain = (ExchangerDomain) object;
+        ExchangerDomain<?> exchangerDomain = (ExchangerDomain<?>) object;
 
         return Objects.equals(this.getId(), exchangerDomain.getId())
                 && Objects.equals(this.getRateDomains(), exchangerDomain.getRateDomains())

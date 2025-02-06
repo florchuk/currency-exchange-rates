@@ -1,15 +1,14 @@
 package ua.nazarii.currency.exchange.rates.services;
 
 import org.springframework.stereotype.Service;
+import ua.nazarii.currency.exchange.rates.domains.ArchiveRateDomain;
 import ua.nazarii.currency.exchange.rates.domains.ExchangerDomain;
 import ua.nazarii.currency.exchange.rates.domains.RateDomain;
-import ua.nazarii.currency.exchange.rates.dto.CurrencyDomainDto;
-import ua.nazarii.currency.exchange.rates.dto.ExchangerDomainDto;
-import ua.nazarii.currency.exchange.rates.dto.ExchangerEntityDto;
-import ua.nazarii.currency.exchange.rates.dto.RateDomainDto;
+import ua.nazarii.currency.exchange.rates.dto.*;
 import ua.nazarii.currency.exchange.rates.entities.ExchangerEntity;
 import ua.nazarii.currency.exchange.rates.repositories.ExchangerRepository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,12 +20,12 @@ public class ExchangerService {
         this.exchangerRepository = exchangerRepository;
     }
 
-    public List<ExchangerDomainDto> findAllDomainDtos() {
+    public List<ExchangerDomainDto<RateDomainDto>> findAllExchangerRateDomainDtos() {
         return this.exchangerRepository
-                .findAllDomains()
+                .findAllExchangerRateDomains()
                 .stream()
                 .map(
-                        (ExchangerDomain exchangerDomain) -> new ExchangerDomainDto(
+                        (ExchangerDomain<RateDomain> exchangerDomain) -> new ExchangerDomainDto<>(
                                 exchangerDomain.getId(),
                                 exchangerDomain
                                         .getRateDomains()
@@ -67,25 +66,63 @@ public class ExchangerService {
                 .toList();
     }
 
-    public List<ExchangerEntityDto> findAllEntityDtos() {
+    public List<ExchangerDomainDto<ArchiveRateDomainDto>> findExchangerArchiveRateDomainDtosByRateIdsAndCreatedAtBetween(
+            List<Integer> rateIds,
+            LocalDateTime startAt,
+            LocalDateTime endAt
+    ) {
         return this.exchangerRepository
-                .findAllEntities()
+                .findExchangerArchiveRateDomainsByRateIdsAndCreatedAtBetween(
+                        rateIds,
+                        startAt,
+                        endAt
+                )
                 .stream()
                 .map(
-                        (ExchangerEntity exchangerEntity) -> new ExchangerEntityDto(
-                                exchangerEntity.getId(),
-                                exchangerEntity.getName(),
-                                exchangerEntity.getNameUk(),
-                                exchangerEntity.getCreatedAt(),
-                                exchangerEntity.getUpdatedAt()
+                        (ExchangerDomain<ArchiveRateDomain> exchangerDomain) -> new ExchangerDomainDto<>(
+                                exchangerDomain.getId(),
+                                exchangerDomain
+                                        .getRateDomains()
+                                        .stream()
+                                        .map(
+                                                (ArchiveRateDomain archiveRateDomain) -> new ArchiveRateDomainDto(
+                                                        archiveRateDomain.getId(),
+                                                        archiveRateDomain.getUnit(),
+                                                        new CurrencyDomainDto(
+                                                                archiveRateDomain.getUnitCurrencyDomain().getAlphabeticCode(),
+                                                                archiveRateDomain.getUnitCurrencyDomain().getDecimalPlace(),
+                                                                archiveRateDomain.getUnitCurrencyDomain().getName(),
+                                                                archiveRateDomain.getUnitCurrencyDomain().getNameUk(),
+                                                                archiveRateDomain.getUnitCurrencyDomain().getCreatedAt(),
+                                                                archiveRateDomain.getUnitCurrencyDomain().getUpdatedAt()
+                                                        ),
+                                                        new CurrencyDomainDto(
+                                                                archiveRateDomain.getRateCurrencyDomain().getAlphabeticCode(),
+                                                                archiveRateDomain.getRateCurrencyDomain().getDecimalPlace(),
+                                                                archiveRateDomain.getRateCurrencyDomain().getName(),
+                                                                archiveRateDomain.getRateCurrencyDomain().getNameUk(),
+                                                                archiveRateDomain.getRateCurrencyDomain().getCreatedAt(),
+                                                                archiveRateDomain.getRateCurrencyDomain().getUpdatedAt()
+                                                        ),
+                                                        archiveRateDomain.getBuyRate(),
+                                                        archiveRateDomain.getSaleRate(),
+                                                        archiveRateDomain.getCreatedAt(),
+                                                        archiveRateDomain.getUpdatedAt()
+                                                )
+                                        )
+                                        .toList(),
+                                exchangerDomain.getName(),
+                                exchangerDomain.getNameUk(),
+                                exchangerDomain.getCreatedAt(),
+                                exchangerDomain.getUpdatedAt()
                         )
                 )
                 .toList();
     }
 
-    public Optional<ExchangerEntityDto> findFirstEntityDtoById(Integer id) {
+    public Optional<ExchangerEntityDto> findExchangerEntityDtoById(Integer id) {
         return this.exchangerRepository
-                .findFirstEntityById(id)
+                .findExchangerEntityById(id)
                 .map(
                         (ExchangerEntity exchangerEntity) -> new ExchangerEntityDto(
                                 exchangerEntity.getId(),

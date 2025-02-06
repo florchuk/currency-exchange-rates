@@ -5,9 +5,9 @@ import ua.nazarii.currency.exchange.rates.entities.ArchiveRateEntity;
 import java.util.Optional;
 
 public interface ArchiveRateRepository {
-    Optional<ArchiveRateEntity> findFirstEntityByRateIdOrderByCreatedAtDesc(Integer rateId);
+    Optional<ArchiveRateEntity> findFirstArchiveRateEntityByRateIdOrderByCreatedAtDesc(Integer rateId);
 
-    int insert(ArchiveRateEntity archiveRateEntity);
+    int insertArchiveRateEntity(ArchiveRateEntity archiveRateEntity);
 
-    int update(ArchiveRateEntity archiveRateEntity);
+    int updateArchiveRateEntity(ArchiveRateEntity archiveRateEntity);
 }

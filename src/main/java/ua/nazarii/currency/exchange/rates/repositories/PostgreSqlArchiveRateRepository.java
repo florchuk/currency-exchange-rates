@@ -24,7 +24,7 @@ public class PostgreSqlArchiveRateRepository implements ArchiveRateRepository {
     }
 
     @Override
-    public Optional<ArchiveRateEntity> findFirstEntityByRateIdOrderByCreatedAtDesc(Integer rateId) {
+    public Optional<ArchiveRateEntity> findFirstArchiveRateEntityByRateIdOrderByCreatedAtDesc(Integer rateId) {
         return this.namedParameterJdbcTemplate
                 .query(
                         """
@@ -57,7 +57,7 @@ public class PostgreSqlArchiveRateRepository implements ArchiveRateRepository {
     }
 
     @Override
-    public int insert(ArchiveRateEntity archiveRateEntity) {
+    public int insertArchiveRateEntity(ArchiveRateEntity archiveRateEntity) {
         archiveRateEntity.setId(
                 this.jdbcTemplate.queryForObject("SELECT NEXTVAL('archive_rates_sequence') AS id;", Long.class)
         );
@@ -100,7 +100,7 @@ public class PostgreSqlArchiveRateRepository implements ArchiveRateRepository {
     }
 
     @Override
-    public int update(ArchiveRateEntity archiveRateEntity) {
+    public int updateArchiveRateEntity(ArchiveRateEntity archiveRateEntity) {
         return this.namedParameterJdbcTemplate
                 .update(
                         """

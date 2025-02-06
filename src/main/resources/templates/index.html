@@ -1,15 +1,190 @@
 <!doctype html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title></title>
-    <link th:href="@{/bootstrap-5.3.3-dist/css/bootstrap.min.css}" rel="stylesheet">
-    <link th:href="@{/bootstrap-icons-1.11.3/font/bootstrap-icons.css}" rel="stylesheet">
-    <link th:href="@{/css/app.css}" rel="stylesheet">
-</head>
-<body>
-    <script th:src="@{/bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js}"></script>
-    <script th:src="@{/js/app.js}"></script>
-</body>
+<html lang="uk">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>Курси обміну валют</title>
+
+        <link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+        <link th:href="@{/bootstrap-icons/font/bootstrap-icons.min.css}" rel="stylesheet">
+        <link th:href="@{/css/app.css}" rel="stylesheet">
+    </head>
+    <body class="font-monospace">
+        <noscript>
+            <div class="container-fluid d-flex justify-content-center align-items-center vh-100 position-fixed top-0 start-0 bg-white z-1">
+                <div class="text-center w-100">
+                    <i class="bi bi-exclamation-circle-fill text-warning d-flex justify-content-center align-items-center" style="font-size: 10rem;"></i>
+                    <h5 class="my-4">Для роботи сайту необхідно увімкнути JavaScript.</h5>
+                </div>
+            </div>
+        </noscript>
+
+        <div id="alerts-container" class="container-fluid fixed-top" tabindex="-1">
+            <div class="row">
+                <div class="col p-3"></div>
+            </div>
+        </div>
+
+        <div id="exchangers-container" class="container-fluid" tabindex="-1">
+            <div class="row">
+                <div class="col p-3">
+                    <div class="card text-bg-light">
+                        <div class="card-header border-bottom-0 p-3">
+                            <div class="d-flex justify-content-start align-items-center gap-3">
+                                <i class="bi bi-currency-exchange fs-1 text-success d-flex align-items-center"></i>
+                                <h1 class="text-uppercase fs-4 fw-bold m-0">Курси обміну валют</h1>
+                            </div>
+                        </div>
+                        <div class="card-body p-0 border-top overflow-x-auto">
+                            <div>
+                                <div id="exchangers-header" class="container-fluid">
+                                    <div class="row text-center text-uppercase fw-bold fs-6 border-bottom">
+                                        <div class="col-4 d-flex justify-content-center align-items-center px-2 py-3 border-end">
+                                            Обмінник
+                                        </div>
+                                        <div class="col-8">
+                                            <div class="row">
+                                                <div class="col-3 d-flex justify-content-center align-items-center px-2 py-3 border-end">
+                                                    Кількість одиниць валюти
+                                                </div>
+                                                <div class="col-3 d-flex justify-content-center align-items-center px-2 py-3 border-end">
+                                                    Купівля
+                                                </div>
+                                                <div class="col-3 d-flex justify-content-center align-items-center px-2 py-3 border-end">
+                                                    Продаж
+                                                </div>
+                                                <div class="col-3 d-flex justify-content-center align-items-center px-2 py-3">
+                                                    Дата
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div id="exchangers-body" class="container-fluid small"></div>
+                            </div>
+                        </div>
+                        <div class="card-footer border-top-0 p-2">
+                            <div class="d-flex justify-content-end align-items-center gap-2">
+                                <a id="period-link" href="#" class="link-dark text-decoration-none focus-ring focus-ring-dark rounded p-2">
+                                    <i class="bi bi-graph-up d-flex align-items-center"></i>
+                                </a>
+                                <div class="vr"></div>
+                                <a id="reload-link" href="#" class="link-dark text-decoration-none focus-ring focus-ring-dark rounded p-2">
+                                    <i class="bi bi-arrow-repeat d-flex align-items-center"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="spinner-modal" class="modal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content bg-transparent border-0">
+                    <div class="modal-body text-center">
+                        <div class="spinner-border text-black" role="status">
+                            <span class="visually-hidden">Очікуйте...</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="period-modal" class="modal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title text-uppercase">Період</h5>
+                        <button type="button" class="btn-close focus-ring focus-ring-dark" data-bs-dismiss="modal" aria-label="Закрити"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="row">
+                                            <div class="col">
+                                                <input name="start_at" type="text" class="form-control text-center" autocomplete="off" aria-label="Дата початку періоду">
+                                            </div>
+                                            <div class="col">
+                                                <input name="end_at" type="text" class="form-control text-center" autocomplete="off" aria-label="Дата закінчення періоду">
+                                            </div>
+                                        </div>
+
+                                        <button type="submit" class="d-none"></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="container-fluid">
+                            <div class="row justify-content-end">
+                                <div class="col-6 col-sm-6 col-md-4 col-lg-4 col-xl-4 col-xxl-4">
+                                    <button type="button" class="btn btn-secondary w-100 text-uppercase" data-bs-dismiss="modal">Закрити</button>
+                                </div>
+                                <div class="col-6 col-sm-6 col-md-4 col-lg-4 col-xl-4 col-xxl-4">
+                                    <button id="period-submit" type="button" class="btn btn-success w-100 text-uppercase">Застосувати</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="chart-modal" class="modal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title text-uppercase"></h5>
+                        <button type="button" class="btn-close focus-ring focus-ring-dark" data-bs-dismiss="modal" aria-label="Закрити"></button>
+                    </div>
+                    <div class="modal-body overflow-x-auto">
+                        <div>
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <canvas id="buy-rate-chart"></canvas>
+                                    </div>
+                                    <div class="col-12">
+                                        <canvas id="sale-rate-chart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="container-fluid">
+                            <div class="row justify-content-end">
+                                <div class="col-6 col-sm-6 col-md-4 col-lg-3 col-xl-2 col-xxl-2">
+                                    <button type="button" class="btn btn-secondary w-100 text-uppercase" data-bs-dismiss="modal">Закрити</button>
+                                </div>
+                                <div class="col-6 col-sm-6 col-md-4 col-lg-3 col-xl-2 col-xxl-2">
+                                    <button id="buy-rate-chart-toggle" type="button" class="btn btn-success w-100 text-uppercase">Купівля</button>
+                                </div>
+                                <div class="col-6 col-sm-6 col-md-4 col-lg-3 col-xl-2 col-xxl-2">
+                                    <button id="sale-rate-chart-toggle" type="button" class="btn btn-success w-100 text-uppercase">Продаж</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script th:src="@{/bootstrap/js/bootstrap.bundle.min.js}"></script>
+        <script th:src="@{/chartjs/chart.umd.js}"></script>
+        <script th:src="@{/js/app.js}"></script>
+        <script type="application/javascript">
+            document.addEventListener('DOMContentLoaded', function () {
+                const app = new App();
+
+                app.run();
+            });
+        </script>
+    </body>
 </html>

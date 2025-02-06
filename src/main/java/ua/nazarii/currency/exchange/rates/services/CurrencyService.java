@@ -5,7 +5,6 @@ import ua.nazarii.currency.exchange.rates.dto.CurrencyEntityDto;
 import ua.nazarii.currency.exchange.rates.entities.CurrencyEntity;
 import ua.nazarii.currency.exchange.rates.repositories.CurrencyRepository;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -16,26 +15,9 @@ public class CurrencyService {
         this.currencyRepository = currencyRepository;
     }
 
-    public List<CurrencyEntityDto> findAllEntityDtos() {
+    public Optional<CurrencyEntityDto> findCurrencyEntityDtoByAlphabeticCode(String alphabeticCode) {
         return this.currencyRepository
-                .findAllEntities()
-                .stream()
-                .map(
-                        (CurrencyEntity currencyEntity) -> new CurrencyEntityDto(
-                                currencyEntity.getAlphabeticCode(),
-                                currencyEntity.getDecimalPlace(),
-                                currencyEntity.getName(),
-                                currencyEntity.getNameUk(),
-                                currencyEntity.getCreatedAt(),
-                                currencyEntity.getUpdatedAt()
-                        )
-                )
-                .toList();
-    }
-
-    public Optional<CurrencyEntityDto> findFirstEntityDtoByCurrencyAlphabeticCode(String currencyAlphabeticCode) {
-        return this.currencyRepository
-                .findFirstEntityByCurrencyAlphabeticCode(currencyAlphabeticCode)
+                .findCurrencyEntityByAlphabeticCode(alphabeticCode)
                 .map(
                         (CurrencyEntity currencyEntity) -> new CurrencyEntityDto(
                                 currencyEntity.getAlphabeticCode(),

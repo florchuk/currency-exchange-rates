@@ -6,12 +6,12 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
-public class ExchangerDomainDto {
+public class ExchangerDomainDto<T> {
     @JsonProperty(value = "id")
     private Integer id;
 
     @JsonProperty(value = "rates")
-    private List<RateDomainDto> rateDomainDtos;
+    private List<T> rateDomainDtos;
 
     @JsonProperty(value = "name")
     private String name;
@@ -27,7 +27,7 @@ public class ExchangerDomainDto {
 
     public ExchangerDomainDto(
             Integer id,
-            List<RateDomainDto> rateDomainDtos,
+            List<T> rateDomainDtos,
             String name,
             String nameUk,
             LocalDateTime createdAt,
@@ -45,7 +45,7 @@ public class ExchangerDomainDto {
         return this.id;
     }
 
-    public List<RateDomainDto> getRateDomainDtos() {
+    public List<T> getRateDomainDtos() {
         return this.rateDomainDtos;
     }
 
@@ -69,7 +69,7 @@ public class ExchangerDomainDto {
         this.id = id;
     }
 
-    public void setRateDomainDtos(List<RateDomainDto> rateDomainDtos) {
+    public void setRateDomainDtos(List<T> rateDomainDtos) {
         this.rateDomainDtos = rateDomainDtos;
     }
 
@@ -99,7 +99,7 @@ public class ExchangerDomainDto {
             return false;
         }
 
-        ExchangerDomainDto exchangerDomainDto = (ExchangerDomainDto) object;
+        ExchangerDomainDto<?> exchangerDomainDto = (ExchangerDomainDto<?>) object;
 
         return Objects.equals(this.getId(), exchangerDomainDto.getId())
                 && Objects.equals(this.getRateDomainDtos(), exchangerDomainDto.getRateDomainDtos())

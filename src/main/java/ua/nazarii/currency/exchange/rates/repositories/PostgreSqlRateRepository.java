@@ -21,7 +21,7 @@ public class PostgreSqlRateRepository implements RateRepository {
     }
 
     @Override
-    public Optional<RateEntity> findFirstEntityByExchangerIdAndUnitCurrencyAlphabeticCodeAndRateCurrencyAlphabeticCode(
+    public Optional<RateEntity> findRateEntityByExchangerIdAndUnitCurrencyAlphabeticCodeAndRateCurrencyAlphabeticCode(
             Integer exchangerId,
             String unitCurrencyAlphabeticCode,
             String rateCurrencyAlphabeticCode
@@ -63,7 +63,7 @@ public class PostgreSqlRateRepository implements RateRepository {
     }
 
     @Override
-    public int insert(RateEntity rateEntity) {
+    public int insertRateEntity(RateEntity rateEntity) {
         rateEntity.setId(
                 this.jdbcTemplate.queryForObject("SELECT NEXTVAL('rates_sequence') AS id;", Integer.class)
         );
@@ -120,7 +120,7 @@ public class PostgreSqlRateRepository implements RateRepository {
     }
 
     @Override
-    public int update(RateEntity rateEntity) {
+    public int updateRateEntity(RateEntity rateEntity) {
         return this.namedParameterJdbcTemplate
                 .update(
                         """

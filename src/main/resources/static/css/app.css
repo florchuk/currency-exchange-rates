@@ -1,0 +1,49 @@
+body,
+html {
+    height: 100%;
+}
+
+#alerts-container {
+    z-index: 2000 !important;
+}
+
+#alerts-container div.alert {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+#alerts-container div.alert:only-child {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+#alerts-container div.alert:first-child {
+    margin-top: 0;
+}
+#alerts-container div.alert:last-child {
+    margin-bottom: 0;
+}
+
+#exchangers-container:focus,
+#alerts-container:focus {
+    outline: none !important;
+}
+
+#spinner-modal .spinner-border {
+    --bs-spinner-height: 5rem;
+    --bs-spinner-width: 5rem;
+}
+
+#exchangers-container div.card-body > div {
+    min-width: var(--bs-breakpoint-md);
+}
+
+#chart-modal div.modal-body > div {
+    min-width: var(--bs-breakpoint-sm);
+}
+
+#exchangers-body div[data-rate-id]:hover {
+    color: #fff !important;
+    background-color: rgba(var(--bs-success-rgb), var(--bs-bg-opacity, 1)) !important;
+    cursor: pointer;
+}

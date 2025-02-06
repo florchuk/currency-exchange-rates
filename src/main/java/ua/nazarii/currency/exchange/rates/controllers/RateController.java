@@ -29,8 +29,8 @@ public class RateController {
     }
 
     @PutMapping(path = {"", "/"})
-    public ResponseEntity<List<RateEntityDto>> save(@Valid @RequestBody List<RateEntityDto> rateDtos) {
-        this.rateService.save(rateDtos);
+    public ResponseEntity<List<RateEntityDto>> saveRateEntityDtos(@Valid @RequestBody List<RateEntityDto> rateDtos) {
+        this.rateService.saveRateEntityDtos(rateDtos);
 
         return ResponseEntity.ok(rateDtos);
     }

@@ -22,7 +22,7 @@ public class RateService {
     }
 
     @Transactional(rollbackFor = {Exception.class})
-    public void save(List<RateEntityDto> rateEntityDtos) {
+    public void saveRateEntityDtos(List<RateEntityDto> rateEntityDtos) {
         for (RateEntityDto rateEntityDto : rateEntityDtos) {
             // Mapping the Dto into the Entity.
             RateEntity rateEntity = new RateEntity(
@@ -50,7 +50,7 @@ public class RateService {
 
             // Searching the Entity in the Repository.
             Optional<RateEntity> optionalCurrentRateEntity = this.rateRepository
-                    .findFirstEntityByExchangerIdAndUnitCurrencyAlphabeticCodeAndRateCurrencyAlphabeticCode(
+                    .findRateEntityByExchangerIdAndUnitCurrencyAlphabeticCodeAndRateCurrencyAlphabeticCode(
                             rateEntity.getExchangerId(),
                             rateEntity.getUnitCurrencyAlphabeticCode(),
                             rateEntity.getRateCurrencyAlphabeticCode()
@@ -71,7 +71,7 @@ public class RateService {
 
                 // Searching the Archive Entity in the Repository.
                 Optional<ArchiveRateEntity> optionalCurrentArchiveRateEntity = this.archiveRateRepository
-                        .findFirstEntityByRateIdOrderByCreatedAtDesc(archiveRateEntity.getRateId());
+                        .findFirstArchiveRateEntityByRateIdOrderByCreatedAtDesc(archiveRateEntity.getRateId());
 
                 // The Archive Entity was found in the Repository.
                 if (optionalCurrentArchiveRateEntity.isPresent()) {
@@ -86,19 +86,19 @@ public class RateService {
                         currentArchiveRateEntity.setUpdatedAt(archiveRateEntity.getUpdatedAt());
 
                         // Applying changes for the Archive Entity.
-                        this.archiveRateRepository.update(currentArchiveRateEntity);
+                        this.archiveRateRepository.updateArchiveRateEntity(currentArchiveRateEntity);
                     } else {
                         // The Archive Entity was changed. Adding the Archive Entity into the Repository.
-                        this.archiveRateRepository.insert(archiveRateEntity);
+                        this.archiveRateRepository.insertArchiveRateEntity(archiveRateEntity);
                     }
                 } else {
                     // The Archive Entity wasn't found in the Repository.
                     // Adding the Archive Entity into the Repository.
-                    this.archiveRateRepository.insert(archiveRateEntity);
+                    this.archiveRateRepository.insertArchiveRateEntity(archiveRateEntity);
                 }
 
                 // Applying changes for the Entity.
-                this.rateRepository.update(currentRateEntity);
+                this.rateRepository.updateRateEntity(currentRateEntity);
 
                 // Updating Dto.
                 rateEntityDto.setId(currentRateEntity.getId());
@@ -106,13 +106,13 @@ public class RateService {
             } else {
                 // The Entity wasn't found in the Repository.
                 // Adding the Entity into the Repository.
-                this.rateRepository.insert(rateEntity);
+                this.rateRepository.insertRateEntity(rateEntity);
 
                 // Setting identifier for the Archive Entity.
                 archiveRateEntity.setRateId(rateEntity.getId());
 
                 // Adding the Archive Entity into the Repository.
-                this.archiveRateRepository.insert(archiveRateEntity);
+                this.archiveRateRepository.insertArchiveRateEntity(archiveRateEntity);
 
                 // Updating Dto.
                 rateEntityDto.setId(rateEntity.getId());

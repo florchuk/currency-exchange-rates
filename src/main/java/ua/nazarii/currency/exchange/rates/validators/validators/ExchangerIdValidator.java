@@ -19,6 +19,6 @@ public class ExchangerIdValidator implements ConstraintValidator<ExchangerId, In
             return true;
         }
 
-        return this.exchangerService.findFirstEntityDtoById(value).isPresent();
+        return this.exchangerService.findExchangerEntityDtoById(value).isPresent();
     }
 }

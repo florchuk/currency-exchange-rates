@@ -19,6 +19,6 @@ public class CurrencyAlphabeticCodeValidator implements ConstraintValidator<Curr
             return true;
         }
 
-        return this.currencyService.findFirstEntityDtoByCurrencyAlphabeticCode(value).isPresent();
+        return this.currencyService.findCurrencyEntityDtoByAlphabeticCode(value).isPresent();
     }
 }
