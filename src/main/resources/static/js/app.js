@@ -1343,6 +1343,20 @@ class App {
                     chart.resize();
                 }
             });
+
+            const container = this._exchangersContainerElement,
+                header = container.querySelector('.card-header'),
+                body = container.querySelector('.card-body'),
+                footer = container.querySelector('.card-footer'),
+                windowHeight = Math.floor(window.innerHeight),
+                headerHeight = Math.ceil(header.getBoundingClientRect().height),
+                footerHeight = Math.ceil(parseFloat(footer.offsetHeight)),
+                containerStyles = window.getComputedStyle(container),
+                paddingTop = Math.ceil(parseFloat(containerStyles.paddingTop)),
+                paddingBottom = Math.ceil(parseFloat(containerStyles.paddingBottom)),
+                maxBodyHeight = Math.floor(windowHeight - (headerHeight + footerHeight + paddingTop + paddingBottom));
+
+            body.style.maxHeight = maxBodyHeight + 'px';
         }.bind(this);
 
         this._clickPeriodSubmitElementListener = function (e) {
@@ -1588,6 +1602,8 @@ class App {
 
         window.addEventListener('resize', this._resizeWindowListener);
 
+        window.dispatchEvent(new Event('resize'));
+
         this._reloadLinkElement.click();
     }
 
@@ -1661,6 +1677,7 @@ class App {
                     element.classList.add('row', 'border-bottom');
 
                     element.setAttribute('data-rate-id', rate.id);
+                    element.setAttribute('role', 'button');
 
                     element.append((function () {
                         const element = document.createElement('div');

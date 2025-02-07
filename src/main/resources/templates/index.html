@@ -10,7 +10,7 @@
         <link th:href="@{/bootstrap-icons/font/bootstrap-icons.min.css}" rel="stylesheet">
         <link th:href="@{/css/app.css}" rel="stylesheet">
     </head>
-    <body class="font-monospace">
+    <body class="font-monospace overflow-hidden">
         <noscript>
             <div class="container-fluid d-flex justify-content-center align-items-center vh-100 position-fixed top-0 start-0 bg-white z-1">
                 <div class="text-center w-100">
@@ -26,9 +26,9 @@
             </div>
         </div>
 
-        <div id="exchangers-container" class="container-fluid" tabindex="-1">
+        <div id="exchangers-container" class="container-fluid p-3" tabindex="-1">
             <div class="row">
-                <div class="col p-3">
+                <div class="col">
                     <div class="card text-bg-light">
                         <div class="card-header border-bottom-0 p-3">
                             <div class="d-flex justify-content-start align-items-center gap-3">
@@ -36,7 +36,7 @@
                                 <h1 class="text-uppercase fs-4 fw-bold m-0">Курси обміну валют</h1>
                             </div>
                         </div>
-                        <div class="card-body p-0 border-top overflow-x-auto">
+                        <div class="card-body p-0 border-top overflow-x-auto overflow-y-auto">
                             <div>
                                 <div id="exchangers-header" class="container-fluid">
                                     <div class="row text-center text-uppercase fw-bold fs-6 border-bottom">

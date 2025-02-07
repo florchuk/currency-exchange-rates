@@ -35,13 +35,9 @@ html {
 }
 
 #exchangers-container div.card-body > div {
-    min-width: var(--bs-breakpoint-sm);
+    min-width: var(--bs-breakpoint-md);
 }
 
 #chart-modal div.modal-body > div {
-    min-width: var(--bs-breakpoint-sm);
-}
-
-#exchangers-body div[data-rate-id]:hover {
-    cursor: pointer;
+    min-width: var(--bs-breakpoint-md);
 }
