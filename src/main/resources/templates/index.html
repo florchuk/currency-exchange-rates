@@ -10,7 +10,7 @@
         <link th:href="@{/bootstrap-icons/font/bootstrap-icons.min.css}" rel="stylesheet">
         <link th:href="@{/css/app.css}" rel="stylesheet">
     </head>
-    <body class="font-monospace overflow-hidden">
+    <body class="font-monospace">
         <noscript>
             <div class="container-fluid d-flex justify-content-center align-items-center vh-100 position-fixed top-0 start-0 bg-white z-1">
                 <div class="text-center w-100">
@@ -30,13 +30,13 @@
             <div class="row">
                 <div class="col">
                     <div class="card text-bg-light">
-                        <div class="card-header border-bottom-0 p-3">
+                        <div class="card-header p-3">
                             <div class="d-flex justify-content-start align-items-center gap-3">
                                 <i class="bi bi-currency-exchange fs-1 text-success d-flex align-items-center"></i>
                                 <h1 class="text-uppercase fs-4 fw-bold m-0">Курси обміну валют</h1>
                             </div>
                         </div>
-                        <div class="card-body p-0 border-top overflow-x-auto overflow-y-auto">
+                        <div class="card-body p-0 overflow-x-auto overflow-y-auto">
                             <div>
                                 <div id="exchangers-header" class="container-fluid">
                                     <div class="row text-center text-uppercase fw-bold fs-6 border-bottom">
@@ -65,7 +65,7 @@
                                 <div id="exchangers-body" class="container-fluid small"></div>
                             </div>
                         </div>
-                        <div class="card-footer border-top-0 p-2">
+                        <div class="card-footer p-2">
                             <div class="d-flex justify-content-end align-items-center gap-2">
                                 <a id="period-link" href="#" class="link-dark text-decoration-none focus-ring focus-ring-dark rounded p-2">
                                     <i class="bi bi-graph-up d-flex align-items-center"></i>

@@ -1345,16 +1345,22 @@ class App {
             });
 
             const container = this._exchangersContainerElement,
-                header = container.querySelector('.card-header'),
-                body = container.querySelector('.card-body'),
-                footer = container.querySelector('.card-footer'),
+                card = this._exchangersContainerElement.querySelector('.card'),
+                header = card.querySelector('.card-header'),
+                body = card.querySelector('.card-body'),
+                footer = card.querySelector('.card-footer'),
                 windowHeight = Math.floor(window.innerHeight),
                 headerHeight = Math.ceil(header.getBoundingClientRect().height),
-                footerHeight = Math.ceil(parseFloat(footer.offsetHeight)),
+                footerHeight = Math.ceil(footer.getBoundingClientRect().height),
                 containerStyles = window.getComputedStyle(container),
                 paddingTop = Math.ceil(parseFloat(containerStyles.paddingTop)),
                 paddingBottom = Math.ceil(parseFloat(containerStyles.paddingBottom)),
-                maxBodyHeight = Math.floor(windowHeight - (headerHeight + footerHeight + paddingTop + paddingBottom));
+                cardStyles = window.getComputedStyle(card),
+                borderTopWidth = Math.ceil(parseFloat(cardStyles.borderTopWidth)),
+                borderBottomWidth = Math.ceil(parseFloat(cardStyles.borderBottomWidth)),
+                maxBodyHeight = Math.floor(
+                    windowHeight - (headerHeight + footerHeight + paddingTop + paddingBottom + borderTopWidth + borderBottomWidth)
+                );
 
             body.style.maxHeight = maxBodyHeight + 'px';
         }.bind(this);
