@@ -3,7 +3,8 @@ INSERT INTO exchangers
 VALUES
     (NEXTVAL('exchangers_sequence'), 'National Bank of Ukraine', 'Національний банк України', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
     (NEXTVAL('exchangers_sequence'), 'PrivatBank (at branches)', 'ПриватБанк (у відділеннях)', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-    (NEXTVAL('exchangers_sequence'), 'UKRSIBBANK (at branches)', 'УКРСИББАНК (у відділеннях)', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+    (NEXTVAL('exchangers_sequence'), 'UKRSIBBANK (at branches)', 'УКРСИББАНК (у відділеннях)', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+    (NEXTVAL('exchangers_sequence'), 'UKRSIBBANK (online)', 'УКРСИББАНК (онлайн)', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
 ON CONFLICT DO NOTHING;
 
 INSERT INTO currencies

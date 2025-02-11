@@ -1154,6 +1154,23 @@ class App {
                                                             },
                                                             tooltip: {
                                                                 callbacks: {
+                                                                    beforeTitle: function (context) {
+                                                                        if (context.length > 0) {
+                                                                            const rateCurrency = context[0].raw.rate_currency,
+                                                                                rateCurrencyDecimalPlace = rateCurrency.decimalPlace,
+                                                                                rateNumberFormat = Intl.NumberFormat(
+                                                                                    'uk-UA',
+                                                                                    {
+                                                                                        maximumFractionDigits: rateCurrencyDecimalPlace,
+                                                                                        minimumFractionDigits: rateCurrencyDecimalPlace
+                                                                                    }
+                                                                                );
+
+                                                                            return rateNumberFormat.format(context[0].raw.y) + ' ' + rateCurrency.alphabeticCode;
+                                                                        } else {
+                                                                            return '';
+                                                                        }
+                                                                    },
                                                                     title: function (context) {
                                                                         if (context.length > 0) {
                                                                             const createdAt = new Date(context[0].raw.x),
@@ -1175,19 +1192,7 @@ class App {
                                                                         }
                                                                     },
                                                                     label: function(context) {
-                                                                        const rateCurrency = context.raw.rate_currency,
-                                                                            rateCurrencyDecimalPlace = rateCurrency.decimalPlace,
-                                                                            rateNumberFormat = Intl.NumberFormat(
-                                                                                'uk-UA',
-                                                                                {
-                                                                                    maximumFractionDigits: rateCurrencyDecimalPlace,
-                                                                                    minimumFractionDigits: rateCurrencyDecimalPlace
-                                                                                }
-                                                                            );
-
-                                                                        return context.dataset.label + ' '
-                                                                            + rateNumberFormat.format(context.raw.y) + ' '
-                                                                            + rateCurrency.alphabeticCode;
+                                                                        return context.dataset.label;
                                                                     }
                                                                 },
                                                                 titleFont: {
